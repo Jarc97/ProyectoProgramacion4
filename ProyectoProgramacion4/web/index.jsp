@@ -10,6 +10,7 @@
 // 
 // --%> 
 
+<%@page import="Modelo.GestorEstudiantes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,20 +21,25 @@
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <%
+            HttpSession sesionActual = request.getSession();
+            String usua;
+            if (sesionActual.getAttribute("usuario")!=null) {                 
+            usua = sesionActual.getAttribute("usuario").toString();
+            out.print("<h5>Usuario= " + usua+"</h5>");
+            }
+        %>
         <div id = "wrapper">
 
             <jsp:directive.include file="header.jsp" />
-            <h2>Bienvenido al sistema de grupos</h2>
+             <h2>
+                 Bienvenido a la herramienta de grupos
+             </h2>
             <div id = "contents">            
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
-                printer took a galley of type and scrambled it to make a type specimen book. It has survived not 
-                only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>           
-
+              Por favor autentiquese en la opcion de login para la formacion de grupos, consultar los grupos y ver los usuarios.
+            </div>        
         </div>
+        
         <jsp:directive.include file="footer.jsp" />
     </body>
 </html>

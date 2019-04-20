@@ -7,6 +7,7 @@ package Control;
 
 import Modelo.GestorEstudiantes;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,35 +18,41 @@ import javax.servlet.http.HttpSession;
  *
  * @author Feli
  */
-public class ServicioLogin extends HttpServlet {
+public class ServicioCambiarClave extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        response.setHeader("cache-control", "no-cache, no-store, must-revalidate");
-      
-        boolean usuarioValido = false;               
-        String usuario = request.getParameter("usuario");
-        String password = request.getParameter("password");
-
-        if (usuario != null && password != null) {
-            try {
-                usuarioValido = GestorEstudiantes.obtenerInstancia().verificarUsuario(usuario, password);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-
-        if (usuarioValido) {
-            HttpSession sesion = request.getSession(true);
-            sesion.setAttribute("usuario", usuario);
-            sesion.setMaxInactiveInterval(60 * 3);
-            response.sendRedirect("principalEstudiante.jsp");
-        } else {
-            response.sendRedirect("errorLogin.jsp?error=2");
+        
+        try (PrintWriter out = response.getWriter()){            
+             HttpSession sesion = request.getSession(true);
+            Object usu = sesion.getAttribute("usuario");
+            String id_usuario = usu.toString(); 
+            Object pass = sesion.getAttribute("password");
+            String clave = pass.toString();
+            
+            response.setContentType("application/json");
+            String claveActual = request.getParameter("claveActual");  
+            String claveNueva = request.getParameter("claveNuevaRep");
+            GestorEstudiantes ge = GestorEstudiantes.obtenerInstancia();
+            if (clave == claveActual) {
+                ge.cambiarClave(id_usuario, clave, claveNueva);            
+            response.sendRedirect("principalEstudiante.jsp");     
+            }       
+        } catch (Exception e) {
+            
         }
     }
-    /**
+
+ /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -56,7 +63,7 @@ public class ServicioLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("errorLogin.jsp?error=0");
+        processRequest(request, response);
     }
 
     /**
@@ -82,4 +89,5 @@ public class ServicioLogin extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
