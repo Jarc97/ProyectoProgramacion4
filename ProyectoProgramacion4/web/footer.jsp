@@ -11,9 +11,8 @@
 // --%> 
 <footer>
     <div>
-        <h3>
-           Luis Felipe Soto Cruz - Julio Rodriguez Chavarria 3pm
-        </h3>
-        <h4>EIF-209 Programación 4</h4>
+        <h5>Luis Felipe Soto Cruz</h5>
+        <h5>Julio Rodríguez Chavarría</h5>
+        <h5>EIF-209 Programación 4</h5>
     </div>
 </footer>

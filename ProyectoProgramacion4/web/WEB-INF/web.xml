@@ -8,6 +8,10 @@
         <servlet-name>ServicioLogout</servlet-name>
         <servlet-class>Control.ServicioLogout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServicioCrearGrupo</servlet-name>
+        <servlet-class>Control.ServicioCrearGrupo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServicioLogin</servlet-name>
         <url-pattern>/ServicioLogin</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ServicioLogout</servlet-name>
         <url-pattern>/ServicioLogout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioCrearGrupo</servlet-name>
+        <url-pattern>/ServicioCrearGrupo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
