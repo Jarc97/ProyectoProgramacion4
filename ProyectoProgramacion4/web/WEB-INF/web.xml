@@ -21,8 +21,8 @@
         <url-pattern>/ServicioLogout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServicioCrearGrupo</servlet-name>
-        <url-pattern>/ServicioCrearGrupo</url-pattern>
+        <servlet-name>ServicioCambiarClave</servlet-name>
+        <url-pattern>/ServicioCambiarClave</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
