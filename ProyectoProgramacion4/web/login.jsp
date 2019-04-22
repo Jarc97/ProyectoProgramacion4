@@ -8,42 +8,33 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="css/default.css" rel="stylesheet" type="text/css"/>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <% response.setHeader("cache-control", "no-cache, no-store, must-revalidate"); %>
     </head>
     <body>
+        <jsp:directive.include file="header.jsp" />
         <%
             HttpSession sesionActual;
             sesionActual = request.getSession(true);
-
             sesionActual.invalidate();
             sesionActual = request.getSession(true);
         %>
-        <jsp:directive.include file="header.jsp" />
-        <div id = "wrapper">
-
-
-            <form name="loginForm" action="ServicioLogin" method="POST">
-                <table class ="inicio" width="65%" cellpadding="8">
-                    <tr>
-                        <td align="right">
-                            <strong>Id usuario:</strong>&nbsp;
-                        </td><td>
-                            <input type="text" size="30" id="usuario" name="usuario" autocomplete="off" />
-                        </td>
-                    </tr><tr>
-                        <td align="right">
-                            <strong>Clave de acceso:</strong>&nbsp;
-                        </td><td>
-                            <input type="text" size="30" id="password" name="password" />
-                        </td>
-                    </tr><tr>
-                        <td align="center" colspan="2">
-                            <button type="submit">Ingresar</button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+        <div id = "wrapperLogin">
+            <div class = "formContent">
+                <div class="fadeIn first">
+                     <img src="img/logoUsua.jpg" alt="LogoUsuario">
+                </div>
+               
+                <form name="loginForm" action="ServicioLogin" method="POST">
+                    <input type="text" id = "usuario" name="usuario" placeholder="Cedula" autocomplete="off">
+                    <input type="password" id = "password" name="password" placeholder="Contraseña">
+                    <input type="submit" id ="ingresar" value="Ingresar">
+                </form>
+            </div>
         </div>
         <jsp:directive.include file="footer.jsp" />
     </body>

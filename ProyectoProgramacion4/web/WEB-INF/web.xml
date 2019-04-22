@@ -12,6 +12,10 @@
         <servlet-name>ServicioCrearGrupo</servlet-name>
         <servlet-class>Control.ServicioCrearGrupo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServicioCambiarClave</servlet-name>
+        <servlet-class>Control.ServicioCambiarClave</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServicioLogin</servlet-name>
         <url-pattern>/ServicioLogin</url-pattern>

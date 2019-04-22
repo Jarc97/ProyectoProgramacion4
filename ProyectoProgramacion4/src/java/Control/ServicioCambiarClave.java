@@ -36,17 +36,15 @@ public class ServicioCambiarClave extends HttpServlet {
              HttpSession sesion = request.getSession(true);
             Object usu = sesion.getAttribute("usuario");
             String id_usuario = usu.toString(); 
-            Object pass = sesion.getAttribute("password");
-            String clave = pass.toString();
             
             response.setContentType("application/json");
             String claveActual = request.getParameter("claveActual");  
             String claveNueva = request.getParameter("claveNuevaRep");
             GestorEstudiantes ge = GestorEstudiantes.obtenerInstancia();
-            if (clave == claveActual) {
-                ge.cambiarClave(id_usuario, clave, claveNueva);            
+            
+            ge.cambiarClave(id_usuario, claveActual, claveNueva);            
             response.sendRedirect("principalEstudiante.jsp");     
-            }       
+         
         } catch (Exception e) {
             
         }
