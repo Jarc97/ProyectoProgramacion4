@@ -150,7 +150,6 @@ public class GestorEstudiantes {
         } catch (Exception ex) {
             System.out.println("Error");
         }
-
     }
      public String obtenerEstudiantesActivos() {
         try {

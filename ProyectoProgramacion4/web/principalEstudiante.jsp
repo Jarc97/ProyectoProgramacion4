@@ -38,18 +38,16 @@
             }
         %>
 
-
-
         <div id ="wrapperEstudiante">
             <h1>
                 Bienvenido al sistema de grupos, <%= ge.obtenerNombre(session)%>
             </h1>
-            <h4 id = "contents">            
+            <h5 id = "contents">            
                 Con esta herramienta usted podrá crear o unirse a un grupo para coordinar sus trabajos en equipo, consultar los grupos 
                 existentes o ver los estudiantes que se encuentran activos. En su perfil podrá consultar sus datos personales y cambiar
                 su contraseña. 
                 <br>Proyecto implementado por Luis Felipe Soto Cruz y Julio Rodríguez Chavarría para el curso de Programación 4, 2019.</br>
-            </h4></br> 
+            </h5></br> 
             <div id="contents">
                 <div class="datosPersonales">
                     <h1>Datos personales</h1>          

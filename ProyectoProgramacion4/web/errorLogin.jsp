@@ -50,6 +50,9 @@
                                 case 2:
                                     mensaje = "Puede que el numero de cédula o la clave sean incorrectas.";
                                     break;
+                                case 3:
+                                    mensaje = "Los datos no coinciden.";
+                                    break;
                                 default:
                                             ;
                             }

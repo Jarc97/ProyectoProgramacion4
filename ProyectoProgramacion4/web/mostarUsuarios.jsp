@@ -23,6 +23,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <% response.setHeader("cache-control", "no-cache, no-store, must-revalidate"); %>
         <script>setTimeout('document.location.reload()', 1000);</script>
+        <script src="scripts/script.js" type="text/javascript"></script>
     </head>
     <body>
         <jsp:directive.include file="headerIn.jsp" />
@@ -43,8 +44,6 @@
                 request.getRequestDispatcher("errorLogin.jsp").forward(request, response);
             }
         %>
-
-
 
         <div id = "wrapperMostrar">
 

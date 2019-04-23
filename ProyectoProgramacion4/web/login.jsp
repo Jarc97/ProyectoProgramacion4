@@ -20,8 +20,6 @@
         <%
             HttpSession sesionActual;
             sesionActual = request.getSession(true);
-            sesionActual.invalidate();
-            sesionActual = request.getSession(true);
         %>
         <div id = "wrapperLogin">
             <div class = "formContent">
