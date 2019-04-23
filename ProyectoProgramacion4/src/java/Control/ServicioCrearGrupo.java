@@ -5,12 +5,18 @@
  */
 package Control;
 
+import Modelo.GestorGrupos;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,12 +34,28 @@ public class ServicioCrearGrupo extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, InstantiationException, ClassNotFoundException, IllegalAccessException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             
+            long idGrupo = System.currentTimeMillis() / 1000;
+            idGrupo -= 1555975241L;
+            long secuenciaGrupo = idGrupo + 1;
+            String nombreGrupo = request.getParameter("nombreGrupo");
+            int cupoGrupo = 5;
+            boolean grupoActivo = true;
             
+            //HttpSession sesion = request.getSession(true);
+            // Object obj = sesion.getAttribute("id");
+            // String idEstudiante = obj.toString(); 
+            
+            GestorGrupos gg = GestorGrupos.obtenerInstancia();
+            gg.crearGrupo(idGrupo, secuenciaGrupo, nombreGrupo, cupoGrupo, grupoActivo);
+            
+            response.sendRedirect("formacionGrupo.jsp");
+            
+        } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
+            Logger.getLogger(ServicioCrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -63,7 +85,11 @@ public class ServicioCrearGrupo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException | InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
+            Logger.getLogger(ServicioCrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

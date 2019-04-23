@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import Entidades.Estudiante;
 import cr.ac.database.managers.DBManager;
 import java.sql.Connection;
 import java.sql.Date;

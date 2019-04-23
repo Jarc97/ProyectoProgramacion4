@@ -37,6 +37,7 @@ public class ServicioCambiarClave extends HttpServlet {
             Object usu = sesion.getAttribute("usuario");
             String id_usuario = usu.toString();
             
+            
             response.setContentType("application/json");
             String claveActual = request.getParameter("passwordActual");  
             String claveNueva = request.getParameter("passwordNew1");
