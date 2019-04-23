@@ -11,29 +11,91 @@
 // --%> 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Modelo.GestorGrupos" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-         <meta name = "viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <meta name = "viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/formacionGrupo.css" type="text/css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
-   <body>
-        <div id = "wrapper">
+    <body>
+        <%
+            // GestorGrupos gc = GestorGrupos.obtenerInstancia();
+            HttpSession sesionActual = request.getSession();
+            long transcurrido = System.currentTimeMillis() - sesionActual.getLastAccessedTime();
+            
+           String usua;
+           
+           if (transcurrido > (1000 * 60 * 5)) {
+                request.getRequestDispatcher("errorLogin.jsp?error=1").forward(request, response);
+            }
+           if (sesionActual.getAttribute("usuario")!=null) {                 
+            usua = sesionActual.getAttribute("usuario").toString();
+            out.print("<h5>Usuario= " + usua+"</h5>");
+            }
+            else{
+                request.getRequestDispatcher("errorLogin.jsp").forward(request, response);
+            }
 
-            <jsp:directive.include file="header.jsp" />
-            <h2>Formacion de grupos</h2>
-            <div id = "contents">            
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
-                printer took a galley of type and scrambled it to make a type specimen book. It has survived not 
-                only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>           
-
+        %>
+        
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+            <a class="navbar-brand" href="#">Logo</a>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Crear/Unirse a un grupo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">|</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Consulta grupos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">|</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Usuarios conectados</a>
+                </li>
+            </ul>
+        </nav>
+       
+        <div id="wrapper">
+            <div class="container">
+                
+                <div class="row">
+                    <div class="col-3">
+                    </div>
+                    
+                    <div class="col-sm-6 text-center">
+                        <div id="form">
+                            <h4 id="formTitulo"> Crear un grupo </h4>
+                            <form action="ServicioCrearGrupo" method="POST">
+                                <input type="text" size="30" id="formNombre" name="nombreGrupo" autocomplete="off" placeholder="Nombre del grupo" />
+                                <br>
+                                <button id="formSubmit" type="submit">Crear</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="col-3">
+                    </div>
+                </div>
+                
+                <%
+                    GestorGrupos gg = GestorGrupos.obtenerInstancia();
+                %>
+                <%=
+                    gg.mostrarGrupos()
+                %>
+                
+            </div> 
         </div>
+        
         <jsp:directive.include file="footer.jsp" />
     </body>
 </html>

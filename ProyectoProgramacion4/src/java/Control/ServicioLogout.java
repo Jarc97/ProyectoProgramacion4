@@ -28,7 +28,7 @@ public class ServicioLogout extends HttpServlet {
         HttpSession sesion = request.getSession(true);
         sesion.removeAttribute("usuario");
         sesion.invalidate();
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("login.jsp");
        
     }
     /**
