@@ -25,22 +25,24 @@
     <body>
          <jsp:directive.include file="headerIn.jsp" />
          <%
-            HttpSession sesionActual = request.getSession();
-                long transcurrido = System.currentTimeMillis() - sesionActual.getLastAccessedTime();
-                String usua;
+             HttpSession sesionActual = request.getSession();
+            long transcurrido = System.currentTimeMillis() - sesionActual.getLastAccessedTime();
+            String id = "";
 
-                if (transcurrido > (1000 * 60 * 5)) {
-                    request.getRequestDispatcher("errorLogin.jsp?error=1").forward(request, response);
-                }
+            if (transcurrido > (1000 * 60 * 5)) {
+                request.getRequestDispatcher("errorLogin.jsp?error=1").forward(request, response);
+            }
 
-                if (sesionActual.getAttribute("usuario") != null) {
-                    usua = sesionActual.getAttribute("usuario").toString();
-                    out.print("<h5>Usuario= " + usua + "</h5>");
-                } else {
-                    request.getRequestDispatcher("errorLogin.jsp").forward(request, response);
-                }
+            if (sesionActual.getAttribute("usuario") != null) {
+                id = sesionActual.getAttribute("usuario").toString();
+
+            } else {
+                request.getRequestDispatcher("errorLogin.jsp").forward(request, response);
+            }
         %>
-               
+        <jsp:useBean id="sessionEst" class ="Modelo.Estudiante" scope="session"/>
+        <jsp:setProperty name = "sessionEst" property="id" value= "<%=id%>" />
+        <h6>El id de la sesion actual mediante bean es: <jsp:getProperty name="sessionEst" property="id"/></h6>               
         <div id="wrapper">
             <div class="container">
                 

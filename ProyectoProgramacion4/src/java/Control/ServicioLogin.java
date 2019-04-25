@@ -44,6 +44,7 @@ public class ServicioLogin extends HttpServlet {
             HttpSession sesion = request.getSession(true);
             sesion.setAttribute("usuario", usuario);
             sesion.setMaxInactiveInterval(60 * 3);
+            System.out.println("Login exitoso");
             response.sendRedirect("principalEstudiante.jsp");
         } else {
             response.sendRedirect("errorLogin.jsp?error=2");

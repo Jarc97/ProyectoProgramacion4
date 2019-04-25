@@ -31,18 +31,24 @@ public class ServicioCambiarClave extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String clave = request.getParameter("passwordActual");
+        System.out.println("La clave es: "+clave);
         try (PrintWriter out = response.getWriter()){            
-             HttpSession sesion = request.getSession(true);
+            HttpSession sesion = request.getSession(true);
             Object usu = sesion.getAttribute("usuario");
             String id_usuario = usu.toString();
             
             response.setContentType("application/json");
-            String claveActual = request.getParameter("passwordActual");  
-            String claveNueva = request.getParameter("passwordNew1");
+            String claveNueva1 = request.getParameter("passwordNew1");  
+            String claveNueva2 = request.getParameter("passwordNew2");
             
-            GestorEstudiantes ge = GestorEstudiantes.obtenerInstancia();            
-            ge.cambiarClave(id_usuario, claveActual, claveNueva);            
+            GestorEstudiantes ge = GestorEstudiantes.obtenerInstancia();
+            if (claveNueva1.equals(claveNueva2)) {
+                ge.cambiarClave(id_usuario, claveNueva1); 
+                System.out.println("Clave cambiada correctamente");
+            }
+            else
+                System.out.println("Las entradas no coinciden");
             response.sendRedirect("principalEstudiante.jsp");     
         } catch (Exception e) {
             

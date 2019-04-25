@@ -6,6 +6,7 @@
 
 <%@page import="Modelo.GestorEstudiantes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="estudiantes" uri="/WEB-INF/tlds/estudiantes" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,22 +23,22 @@
             GestorEstudiantes ge = GestorEstudiantes.obtenerInstancia();
             HttpSession sesionActual = request.getSession();
             long transcurrido = System.currentTimeMillis() - sesionActual.getLastAccessedTime();
-            String usua;
-            String clave;
+            String id = "";
 
             if (transcurrido > (1000 * 60 * 5)) {
                 request.getRequestDispatcher("errorLogin.jsp?error=1").forward(request, response);
             }
 
             if (sesionActual.getAttribute("usuario") != null) {
-                usua = sesionActual.getAttribute("usuario").toString();
-                out.print("<h5>Usuario= " + usua + "</h5>");
+                id = sesionActual.getAttribute("usuario").toString();
 
             } else {
                 request.getRequestDispatcher("errorLogin.jsp").forward(request, response);
             }
         %>
-
+        <jsp:useBean id="sessionEst" class ="Modelo.Estudiante" scope="session"/>
+        <jsp:setProperty name = "sessionEst" property="id" value= "<%=id%>" />
+        <h6>El id de la sesion actual mediante bean es: <jsp:getProperty name="sessionEst" property="id"/></h6>
         <div id ="wrapperEstudiante">
             <h1>
                 Bienvenido al sistema de grupos, <%= ge.obtenerNombre(session)%>
@@ -53,10 +54,15 @@
                     <h1>Datos personales</h1>          
                     <p>
                         <%= ge.obtenerEstudiante(sesionActual)%>
-                    </p>
-                <form action="cambioClave.jsp" method ="GET">
-                    <input type="submit" value="Cambiar Clave"/>
-                </form>
+                        <%
+                            //<jsp:useBean class="Modelo.GestorEstudiantes" id="usuarios" scope="session"></jsp:useBean>
+                            //${estudiantes:listaGeneral(usuarios)}
+                       
+                        %>
+                    </p>                        
+                    <form action="cambioClave.jsp" method ="GET">
+                        <input type="submit" value="Cambiar Clave"/>
+                    </form>
                 </div>                
             </div>
         </div> 

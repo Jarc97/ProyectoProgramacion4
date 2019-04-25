@@ -28,6 +28,7 @@ public class ServicioLogout extends HttpServlet {
         HttpSession sesion = request.getSession(true);
         sesion.removeAttribute("usuario");
         sesion.invalidate();
+        System.out.println("Sesion invalidada con exito");
         response.sendRedirect("login.jsp");
        
     }

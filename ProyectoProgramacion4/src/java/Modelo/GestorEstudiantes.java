@@ -6,6 +6,7 @@
 package Modelo;
 
 import cr.ac.database.managers.DBManager;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,8 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Feli
  */
-public class GestorEstudiantes {
-    
+public class GestorEstudiantes implements Serializable {
 
     private GestorEstudiantes()
             throws InstantiationException, ClassNotFoundException, IllegalAccessException {
@@ -38,6 +38,55 @@ public class GestorEstudiantes {
         return instancia;
     }
 
+    public ArrayList<Object[]> obtenerLista() {
+        ArrayList<Object[]> estudiantes = new ArrayList<>();
+
+        // Abre una conexión a la base de datos y carga la lista de usuarios.
+        try {
+
+            Connection cnx = bd.getConnection(BASE_DATOS, USUARIO_BD, CLAVE_BD);
+
+            Statement stm = cnx.createStatement();
+            ResultSet rs = stm.executeQuery(CMD_LISTAR_ESTUDIANTES);
+            int maxCols = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] registro = new Object[maxCols];
+                for (int i = 0; i < maxCols; i++) {
+                    registro[i] = rs.getObject(i + 1);
+                }
+                estudiantes.add(registro);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
+        } finally {
+            bd.closeConnection();
+        }
+
+        return estudiantes;
+    }
+public static String listaUsuariosHTML(GestorEstudiantes g) {
+        StringBuilder r = new StringBuilder();
+        ArrayList<Object[]> usuarios = g.obtenerLista();
+        if (usuarios.size() > 0) {
+            for (Object[] registro : usuarios) {
+                r.append("<tr>");
+                for (Object e : registro) {
+                    r.append("<td>");
+                    if (e != null) {
+                        r.append(e.toString());
+                    } else {
+                        r.append("(null)");
+                    }
+                    r.append("</td>");
+                }
+                r.append("</tr>");
+            }
+        } else {
+            r.append("<tr><td colspan=\"5\">(No hay registros en la base de datos.)</td></tr>");
+        }
+
+        return r.toString();
+    }
     public boolean verificarUsuario(String id, String clave) {
         boolean encontrado = false;
         try {
@@ -48,7 +97,7 @@ public class GestorEstudiantes {
                 stm.setString(2, clave);
                 ResultSet rs = stm.executeQuery();
                 encontrado = rs.next();
-                }
+            }
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
         } finally {
@@ -58,7 +107,7 @@ public class GestorEstudiantes {
         }
         return encontrado;
     }
-    
+
     public String obtenerEstudiante(HttpSession session) {
         StringBuilder r = new StringBuilder();
         try {
@@ -102,43 +151,45 @@ public class GestorEstudiantes {
         }
         return r.toString();
     }
-     public String listarNombre(HttpSession session) throws SQLException {
+
+    public String listarNombre(HttpSession session) throws SQLException {
         String e;
         try (Connection cnx = bd.getConnection(BASE_DATOS, USUARIO_BD, CLAVE_BD);
                 PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_NOMBRE)) {
             Object objeto = session.getAttribute("usuario");
             String idEst = objeto.toString();
-            
+
             stm.clearParameters();
-            
+
             stm.setString(1, idEst);
 
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
-                    return e =  rs.getString("nombre")+ " "+ rs.getString("apellidos");
-                } 
+                    return e = rs.getString("nombre") + " " + rs.getString("apellidos");
+                }
             }
             return null;
         }
     }
-     
-    public void cambiarClave(String id, String claveActual, String claveNueva) throws SQLException {
+
+    public void cambiarClave(String id, String claveNueva) throws SQLException {
         try {
-            if (verificarUsuario(id, claveActual)) {
-                try (Connection cnx = bd.getConnection(BASE_DATOS, USUARIO_BD, CLAVE_BD);
-                        PreparedStatement stm = cnx.prepareStatement(CMD_CAMBIAR_CLAVE)) {
-                    stm.clearParameters();
-                    stm.setString(1, claveNueva);
-                    stm.setString(2, id);
-                    stm.execute();
-                } catch (Exception ex) {
-                    System.out.println("Error");
-                }
+
+            try (Connection cnx = bd.getConnection(BASE_DATOS, USUARIO_BD, CLAVE_BD);
+                    PreparedStatement stm = cnx.prepareStatement(CMD_CAMBIAR_CLAVE)) {
+                stm.clearParameters();
+                stm.setString(1, claveNueva);
+                stm.setString(2, id);
+                stm.executeUpdate();
+            } catch (Exception ex) {
+                System.out.println(ex);
             }
+
         } catch (Exception e) {
             System.out.println("Error");
         }
     }
+
     public void cambiarEstadoActividad(String id) throws SQLException {
         try (Connection cnx = bd.getConnection(BASE_DATOS, USUARIO_BD, CLAVE_BD);
                 PreparedStatement stm = cnx.prepareStatement(CMD_CAMBIAR_ACTIVIDAD)) {
@@ -151,7 +202,8 @@ public class GestorEstudiantes {
             System.out.println("Error");
         }
     }
-     public String obtenerEstudiantesActivos() {
+
+    public String obtenerEstudiantesActivos() {
         try {
             List<Estudiante> registros;
             registros = listarEstudiantesActivos();
@@ -176,7 +228,7 @@ public class GestorEstudiantes {
             return e.getMessage();
         }
     }
-    
+
     public List<Estudiante> listarEstudiantesActivos() throws SQLException {
         List<Estudiante> r = new ArrayList<>();
         try (Connection cnx = bd.getConnection(BASE_DATOS, USUARIO_BD, CLAVE_BD);
@@ -202,10 +254,9 @@ public class GestorEstudiantes {
         return r;
     }
 
-    
     private DBManager bd = null;
     private static GestorEstudiantes instancia = null;
-    private static final String BASE_DATOS = "eif209_1901_p01"; 
+    private static final String BASE_DATOS = "eif209_1901_p01";
     private static final String USUARIO_BD = "root";
     private static final String CLAVE_BD = "root";
     private static final String CMD_VERIFICAR = "SELECT id FROM estudiante WHERE id = ? AND clave = ?;";

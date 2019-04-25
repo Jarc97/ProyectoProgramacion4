@@ -5,7 +5,7 @@
  */
 package Modelo;
 
-import java.sql.Date;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -13,7 +13,10 @@ import java.text.SimpleDateFormat;
  *
  * @author Feli
  */
-public class Estudiante {
+public class Estudiante implements Serializable{
+
+    public Estudiante() {
+    }
 
     public Estudiante(String id, int nrc, String apellidos, String nombre, int secuencia, String clave, Timestamp ultimo_acceso, int grupo_id) {
         this.id = id;
