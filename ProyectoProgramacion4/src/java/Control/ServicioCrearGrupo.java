@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
+import org.apache.tomcat.jni.SSLContext;
 
 /**
  *
@@ -38,19 +39,17 @@ public class ServicioCrearGrupo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            long idGrupo = System.currentTimeMillis() / 1000;
-            idGrupo -= 1555975241L;
-            long secuenciaGrupo = idGrupo + 1;
             String nombreGrupo = request.getParameter("nombreGrupo");
             int cupoGrupo = 5;
-            boolean grupoActivo = true;
             
-            //HttpSession sesion = request.getSession(true);
-            // Object obj = sesion.getAttribute("id");
-            // String idEstudiante = obj.toString(); 
+            HttpSession sesion = request.getSession(true);
+            String idEstudiante = (String) sesion.getAttribute("usuario");
             
             GestorGrupos gg = GestorGrupos.obtenerInstancia();
-            gg.crearGrupo(idGrupo, secuenciaGrupo, nombreGrupo, cupoGrupo, grupoActivo);
+            gg.crearGrupo(0, nombreGrupo, cupoGrupo);
+            String idGrupo = gg.buscarIdGrupoPorNombre(nombreGrupo);
+            gg.inscribirEstudianteEnGrupo(idEstudiante, idGrupo);
+            gg.verificarActividadEnGrupos();
             
             response.sendRedirect("formacionGrupo.jsp");
             
