@@ -1,7 +1,18 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
+function entrarAGrupo(idGrupo) {
+    let fetchURL = "ServicioEntrarGrupo?id_grupo=" + idGrupo;
+    fetch(fetchURL)
+    .then(function(data) {
+        // console.log(data);
+        location.reload(true);
+    });
+}
 
+function salirDelGrupo(idGrupo) {
+    let fetchURL = "ServicioSalirGrupo?id_grupo=" + idGrupo;
+    fetch(fetchURL)
+    .then(function(data) {
+        // console.log(data);
+        location.reload(true);
+    });
+}

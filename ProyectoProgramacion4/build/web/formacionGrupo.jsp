@@ -21,8 +21,10 @@
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="css/formacionGrupo.css" type="text/css">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="scripts/formacionGrupo.js" type="text/javascript"></script>
     </head>
     <body>
+        <jsp:directive.include file="header.jsp" />
         <%
             // GestorGrupos gc = GestorGrupos.obtenerInstancia();
             HttpSession sesionActual = request.getSession();
@@ -42,27 +44,6 @@
             }
 
         %>
-        
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-            <a class="navbar-brand" href="#">Logo</a>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Crear/Unirse a un grupo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">|</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Consulta grupos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">|</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Usuarios conectados</a>
-                </li>
-            </ul>
-        </nav>
        
         <div id="wrapper">
             <div class="container">
@@ -72,6 +53,7 @@
                     </div>
                     
                     <div class="col-sm-6 text-center">
+                        <p style="background-color: red; border-radius: 15px;">${error}</p>
                         <div id="form">
                             <h4 id="formTitulo"> Crear un grupo </h4>
                             <form action="ServicioCrearGrupo" method="POST">

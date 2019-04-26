@@ -6,24 +6,22 @@
 package Control;
 
 import Modelo.GestorGrupos;
-
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
-import org.apache.tomcat.jni.SSLContext;
 
 /**
  *
  * @author julio
  */
-public class ServicioCrearGrupo extends HttpServlet {
+public class ServicioEntrarGrupo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,26 +37,18 @@ public class ServicioCrearGrupo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            GestorGrupos gg = GestorGrupos.obtenerInstancia();
-            String nombreGrupo = request.getParameter("nombreGrupo");
-            if (gg.validarNombreGrupo(nombreGrupo) == false) {
-                String formattedErrorString = String.format("El nombre \"%s\" no está disponible.", nombreGrupo);
-                request.setAttribute("error", formattedErrorString);
-                request.getRequestDispatcher("/formacionGrupo.jsp").forward(request, response);
-                return;
-            }
-            
-            int cupoGrupo = 5;
             HttpSession sesion = request.getSession(true);
             String idEstudiante = (String) sesion.getAttribute("usuario");
             
-            String idGrupoViejo = gg.buscarGrupoDeEstudiante(idEstudiante);
-            gg.crearGrupo(0, nombreGrupo, cupoGrupo);
-            String idGrupoNuevo = gg.buscarIdGrupoPorNombre(nombreGrupo);
-            gg.inscribirEstudianteEnGrupo(idEstudiante, idGrupoNuevo);
-            gg.verificarActividadDeGrupo(idGrupoViejo);
+            String idGrupo = request.getParameter("id_grupo");
             
-            response.sendRedirect("formacionGrupo.jsp");
+            GestorGrupos gg = GestorGrupos.obtenerInstancia();
+            if (gg.verificarCupoMaximoDeGrupo(idGrupo)) {
+                gg.inscribirEstudianteEnGrupo(idEstudiante, idGrupo);
+            } else {
+                request.setAttribute("error", "No se pudo ingresar al grupo seleccionado");
+            }
+            // response.sendRedirect("formacionGrupo.jsp");
             
         } catch (InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
             Logger.getLogger(ServicioCrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,7 +67,11 @@ public class ServicioCrearGrupo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException | InstantiationException | ClassNotFoundException | IllegalAccessException ex) {
+            Logger.getLogger(ServicioEntrarGrupo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
