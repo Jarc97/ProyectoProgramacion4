@@ -44,8 +44,8 @@
         %>
         <jsp:useBean id="sessionEst" class ="Modelo.Estudiante" scope="session"/>
         <jsp:setProperty name = "sessionEst" property="id" value= "<%=id%>" />
-        <h6>El id de la sesion actual mediante bean es: <jsp:getProperty name="sessionEst" property="id"/></h6>
-        <div id = "wrapper">
+        <h6>Id de la sesion actual mediante bean: <jsp:getProperty name="sessionEst" property="id"/></h6>        <div id = "wrapperMostrar">
+ <div id = "wrapper">
             <h2>Grupos registrados</h2>
 
             <div class = "totalMat">

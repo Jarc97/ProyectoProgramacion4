@@ -8,7 +8,6 @@ package Modelo;
 import cr.ac.database.managers.DBManager;
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,7 +63,8 @@ public class GestorEstudiantes implements Serializable {
 
         return estudiantes;
     }
-public static String listaUsuariosHTML(GestorEstudiantes g) {
+
+    public static String listaUsuariosHTML(GestorEstudiantes g) {
         StringBuilder r = new StringBuilder();
         ArrayList<Object[]> usuarios = g.obtenerLista();
         if (usuarios.size() > 0) {
@@ -87,6 +87,7 @@ public static String listaUsuariosHTML(GestorEstudiantes g) {
 
         return r.toString();
     }
+
     public boolean verificarUsuario(String id, String clave) {
         boolean encontrado = false;
         try {
@@ -203,10 +204,10 @@ public static String listaUsuariosHTML(GestorEstudiantes g) {
         }
     }
 
-    public String obtenerEstudiantesActivos() {
+    public String obtenerEstudiantesActivos(String condicion) {
         try {
             List<Estudiante> registros;
-            registros = listarEstudiantesActivos();
+            registros = listarEstudiantesActivos(condicion);
             StringBuilder strb = new StringBuilder();
 
             ListIterator<Estudiante> r = registros.listIterator();
@@ -229,7 +230,32 @@ public static String listaUsuariosHTML(GestorEstudiantes g) {
         }
     }
 
-    public List<Estudiante> listarEstudiantesActivos() throws SQLException {
+    public List<Estudiante> listarEstudiantesActivos(String condicion) throws SQLException {
+        List<Estudiante> r = new ArrayList<>();
+        try (Connection cnx = bd.getConnection(BASE_DATOS, USUARIO_BD, CLAVE_BD);
+                Statement stm = cnx.createStatement();
+                ResultSet rs = stm.executeQuery(CMD_LISTAR_ESTUDIANTES + condicion(condicion))) {
+
+            while (rs.next()) {
+                String id = rs.getString("id");
+                int nrc = rs.getInt("nrc");
+                String apellidos = rs.getString("apellidos");
+                String nombre = rs.getString("nombre");
+                int secuencia = rs.getInt("secuencia");
+                String clave = rs.getString("clave");
+                Timestamp ultimo_acceso = rs.getTimestamp("ultimo_acceso");
+                int grupo_id = rs.getInt("grupo_id");
+
+                r.add(new Estudiante(id, nrc, apellidos,
+                        nombre, secuencia, clave, ultimo_acceso, grupo_id));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return r;
+    }
+
+    public List<Estudiante> listarEstudiantes() throws SQLException {
         List<Estudiante> r = new ArrayList<>();
         try (Connection cnx = bd.getConnection(BASE_DATOS, USUARIO_BD, CLAVE_BD);
                 Statement stm = cnx.createStatement();
@@ -254,6 +280,34 @@ public static String listaUsuariosHTML(GestorEstudiantes g) {
         return r;
     }
 
+    public String condicion(String cond) {
+        String resultado = "";
+        if (null != cond) {
+            switch (cond) {
+                case "grupoTrabajo":
+                    resultado = CMD_ORDER_BY_GRUP_TRAB;
+                    break;
+                case "grupoMatriculado":
+                    resultado = CMD_ORDER_BY_GRUP_MAT;
+                    break;
+                case "numeroId":
+                    resultado = CMD_ORDER_BY_ID;
+                    break;
+                case "apellidosNombre":
+                    resultado = CMD_ORDER_BY_APEL_NOMB;
+                    break;
+                case "ultimoAcceso":
+                    resultado = CMD_ORDER_BY_ULT_ACC;
+                    break;
+                case "porDefecto":
+                    resultado = ";";
+                    break;
+                default:
+                    break;
+            }
+        }
+        return resultado;
+    }
     private DBManager bd = null;
     private static GestorEstudiantes instancia = null;
     private static final String BASE_DATOS = "eif209_1901_p01";
@@ -263,6 +317,11 @@ public static String listaUsuariosHTML(GestorEstudiantes g) {
     private static final String CMD_RECUPERAR = "SELECT id, nrc, apellidos, nombre, secuencia, clave, ultimo_acceso, grupo_id FROM estudiante WHERE id=?; ";
     private static final String CMD_RECUPERAR_NOMBRE = "SELECT apellidos, nombre FROM estudiante WHERE id=?; ";
     private static final String CMD_CAMBIAR_CLAVE = "UPDATE estudiante SET clave = ? WHERE id=?; ";
-    private static final String CMD_LISTAR_ESTUDIANTES = "SELECT id, nrc, apellidos, nombre, secuencia, clave, ultimo_acceso, grupo_id FROM estudiante;";
+    private static final String CMD_LISTAR_ESTUDIANTES = "SELECT id, nrc, apellidos, nombre, secuencia, clave, ultimo_acceso, grupo_id FROM estudiante ";
+    private static final String CMD_ORDER_BY_GRUP_TRAB = "ORDER BY 8 DESC;";
+    private static final String CMD_ORDER_BY_GRUP_MAT = "ORDER BY 2;";
+    private static final String CMD_ORDER_BY_ID = "ORDER BY 1;";
+    private static final String CMD_ORDER_BY_APEL_NOMB = "ORDER BY 3, 4;";
+    private static final String CMD_ORDER_BY_ULT_ACC = "ORDER BY 7 DESC;";
     private static final String CMD_CAMBIAR_ACTIVIDAD = "UPDATE estudiante SET ultimo_acceso = ? WHERE id=?; ";
 }

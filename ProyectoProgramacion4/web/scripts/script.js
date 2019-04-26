@@ -1,8 +1,19 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+var catalogo = null;
+var tablaEstudiantes = [];
+var productoSeleccionado = null;
+
+function init() {
+    console.log("Aplicación inicializada..");
+}
+function inicializarDatos(nuevosDatos) {
+
+    // Esta función se ejecuta cuando se carga la hoja de scripts.
+    // NO se ejecuta como respuesta a un evento de la página.
+
+    catalogo = nuevosDatos;
+    console.log("Datos cargados..");
+}
+
 function cambiarClave(parametro) {
     let fetchURL = "ServicioCambiarClave?clave=" + parametro;
     fetch(fetchURL)
@@ -10,6 +21,38 @@ function cambiarClave(parametro) {
                 location.reload(true);
             });
 }
+function obtenerEstudiante(id) {
+    var r = null;
+    for (var i = 0; i < catalogo.estudiantes.length; i++) {
+        var estudiante = catalogo.estudiantes[i];
+        if (estudiante.id === id) {
+            r = estudiante;
+            break;
+        }
+    }
+    return r;
+}
+function seleccionarOpcion() {
+    var refMenu = document.getElementById("selFil");
+    if (refMenu) {
+        var id = refMenu.value;
+        if (id !== "null") {
+            console.log("Seleccionando opcion: " + id);
+            productoSeleccionado = obtenerEstudiante(id);
+        } else {
+            productoSeleccionado = null;
+            console.error("No se ha seleccionado el producto.");
+        }
+
+        // Una vez que se ha seleccionado el producto, se muestra
+        // la información en el formulario.
+        // El producto no se agrega a la factura hasta que el usuario
+        // haga clic en el botón correspondiente.
+
+        actualizarFormulario();
+    }
+}
+
 
 function validarClave()
 {
@@ -39,3 +82,5 @@ function validarClave()
         return false;
     }
 }
+
+
