@@ -28,6 +28,10 @@
         <servlet-name>ServicioConsultaGrupos</servlet-name>
         <servlet-class>Control.ServicioConsultaGrupos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServicioMostarEstudiantes</servlet-name>
+        <servlet-class>Control.ServicioMostarEstudiantes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServicioLogin</servlet-name>
         <url-pattern>/ServicioLogin</url-pattern>
@@ -43,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>ServicioCambiarClave</servlet-name>
         <url-pattern>/ServicioCambiarClave</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioMostarEstudiantes</servlet-name>
+        <url-pattern>/ServicioMostarEstudiantes</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServicioEntrarGrupo</servlet-name>

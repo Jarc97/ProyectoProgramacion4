@@ -5,7 +5,7 @@
  */
 package Entidades;
 
-import java.sql.Date;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -13,7 +13,10 @@ import java.text.SimpleDateFormat;
  *
  * @author Feli
  */
-public class Estudiante {
+public class Estudiante implements Serializable{
+
+    public Estudiante() {
+    }
 
     public Estudiante(String id, int nrc, String apellidos, String nombre, int secuencia, String clave, Timestamp ultimo_acceso, int grupo_id) {
         this.id = id;
@@ -117,14 +120,14 @@ public class Estudiante {
         strb.append("<br> Nombre: <strong>");strb.append(nombre);strb.append("</strong></br>");
         strb.append("<br> Apellidos: <strong>");strb.append(apellidos);strb.append("</strong></br><br></br>");
 
-        return strb.toString() + "\n" + "Estudiante: " + "id=" + id + ", nrc=" + nrc + ", apellidos=" + apellidos + ", nombre=" + nombre + ", secuencia=" + secuencia + ", clave=" + clave + ", ultimo_acceso=" + ultimo_acceso + ", grupo_id=" + grupo_id;
+        return strb.toString();
     }
 
     public String toStringActivos() {
         StringBuilder strb = new StringBuilder();
         strb.append("<tr><td>");strb.append(id);strb.append("</td>");
         strb.append("<td>");strb.append(Integer.toString(nrc));
-        strb.append("<td>");strb.append(nombre);strb.append(" ");strb.append(apellidos);strb.append("</td>");
+        strb.append("<td>");strb.append(apellidos);strb.append(", ");strb.append(nombre);strb.append("</td>");
         strb.append("<td>");strb.append(estaActivo(ultimo_acceso));strb.append("</td>");
         strb.append("<td>");strb.append(grupoEscogido(grupo_id));strb.append("</tr></td>");
         

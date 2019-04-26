@@ -28,9 +28,9 @@
                 </div>
                
                 <form name="loginForm" action="ServicioLogin" method="POST">
-                    <input type="text" id = "usuario" name="usuario" placeholder="Cedula" autocomplete="off">
-                    <input type="password" id = "password" name="password" placeholder="Contraseña">
-                    <input type="submit" id ="ingresar" value="Ingresar">
+                    <input type="text" name="usuario" placeholder="Cedula" autocomplete="off">
+                    <input type="password" name="password" placeholder="Contraseña">
+                    <input type="submit" value="Ingresar">
                 </form>
             </div>
         </div>

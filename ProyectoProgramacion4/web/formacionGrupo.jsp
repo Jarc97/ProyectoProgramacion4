@@ -24,28 +24,27 @@
         <script src="scripts/formacionGrupo.js" type="text/javascript"></script>
     </head>
     <body>
-        <jsp:directive.include file="header.jsp" />
-        <%
-            // GestorGrupos gc = GestorGrupos.obtenerInstancia();
-            HttpSession sesionActual = request.getSession();
+         <jsp:directive.include file="headerIn.jsp" />
+         <%
+             HttpSession sesionActual = request.getSession();
             long transcurrido = System.currentTimeMillis() - sesionActual.getLastAccessedTime();
-            
-           String usua;
-           
-           if (transcurrido > (1000 * 60 * 5)) {
+            String id = "";
+
+            if (transcurrido > (1000 * 60 * 5)) {
                 request.getRequestDispatcher("errorLogin.jsp?error=1").forward(request, response);
             }
-           if (sesionActual.getAttribute("usuario")!=null) {                 
-            usua = sesionActual.getAttribute("usuario").toString();
-            out.print("<h5>Usuario= " + usua+"</h5>");
-            }
-            else{
+
+            if (sesionActual.getAttribute("usuario") != null) {
+                id = sesionActual.getAttribute("usuario").toString();
+
+            } else {
                 request.getRequestDispatcher("errorLogin.jsp").forward(request, response);
             }
-
         %>
-       
-        <div id="wrapper">
+        <jsp:useBean id="sessionEst" class ="Modelo.Estudiante" scope="session"/>
+        <jsp:setProperty name = "sessionEst" property="id" value= "<%=id%>" />
+        <h6>Id de la sesion actual mediante bean: <jsp:getProperty name="sessionEst" property="id"/></h6>        <div id = "wrapperMostrar">
+  <div id="wrapper">
             <div class="container">
                 
                 <div class="row">

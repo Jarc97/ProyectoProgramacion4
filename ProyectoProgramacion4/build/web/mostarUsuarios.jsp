@@ -10,7 +10,10 @@
 // 
 // --%> 
 
+<%@page import="java.util.List"%>
+<%@page import="Modelo.Estudiante"%>
 <%@page import="Modelo.GestorEstudiantes"%>
+<%@page import="Control.ServicioMostarEstudiantes" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,8 +25,10 @@
         <link href="css/default.css" rel="stylesheet" type="text/css"/>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <% response.setHeader("cache-control", "no-cache, no-store, must-revalidate"); %>
-        <script>setTimeout('document.location.reload()', 1000);</script>
-        <script src="scripts/script.js" type="text/javascript"></script>
+        <script src="scripts/script.js" type="text/javascript"></script>    
+        <script type="text/javascript">
+            inicializarDatos(<%= new ServicioMostarEstudiantes().listaProductosJSON()%>);
+        </script>
     </head>
     <body>
         <jsp:directive.include file="headerIn.jsp" />
@@ -31,21 +36,22 @@
             HttpSession sesionActual = request.getSession();
             GestorEstudiantes ge = GestorEstudiantes.obtenerInstancia();
             long transcurrido = System.currentTimeMillis() - sesionActual.getLastAccessedTime();
-            String usua;
+            String id = "";
 
             if (transcurrido > (1000 * 60 * 5)) {
                 request.getRequestDispatcher("errorLogin.jsp?error=1").forward(request, response);
             }
 
             if (sesionActual.getAttribute("usuario") != null) {
-                usua = sesionActual.getAttribute("usuario").toString();
-                out.print("<h5>Usuario= " + usua + "</h5>");
+                id = sesionActual.getAttribute("usuario").toString();
+
             } else {
                 request.getRequestDispatcher("errorLogin.jsp").forward(request, response);
             }
         %>
-
-        <div id = "wrapperMostrar">
+        <jsp:useBean id="sessionEst" class ="Modelo.Estudiante" scope="session"/>
+        <jsp:setProperty name = "sessionEst" property="id" value= "<%=id%>" />
+        <h6>Id de la sesion actual mediante bean: <jsp:getProperty name="sessionEst" property="id"/></h6>        <div id = "wrapperMostrar">
 
             <h2>Usuarios activos</h2>
             <div id = "contents">            
@@ -55,11 +61,23 @@
                 only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
                 It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
                 and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>  
-            <div class="usuariosTotales">            
-                <p>
-                    <%= ge.obtenerEstudiantesActivos()%>
-                </p>
+            </div>
+            <form name="buscarPor" action="ServicioMostarEstudiantes" method="POST">
+                <a>
+                    Mostrar por...
+                </a>
+                <select name="selFil" onchange="seleccionarOpcion()">
+                    <option value="porDefecto" selected="selected">Elija una opcion</option>
+                    <option value="grupoTrabajo">Grupo de trabajo</option>
+                    <option value="grupoMatriculado">Grupo matriculado</option>
+                    <option value="numeroId">Numero de identificacion</option>
+                    <option value="apellidosNombre">Apellidos y nombre</option>
+                    <option value="ultimoAcceso">Ultimo acceso</option>
+                </select>
+                <input type="submit" value="Filtar"/>
+            </form>
+            <div class="usuariosTotales"> 
+                ${listaE}
             </div>
         </div>            
         <jsp:directive.include file="footer.jsp" />
