@@ -16,6 +16,18 @@
         <servlet-name>ServicioCambiarClave</servlet-name>
         <servlet-class>Control.ServicioCambiarClave</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServicioEntrarGrupo</servlet-name>
+        <servlet-class>Control.ServicioEntrarGrupo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicioSalirGrupo</servlet-name>
+        <servlet-class>Control.ServicioSalirGrupo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicioConsultaGrupos</servlet-name>
+        <servlet-class>Control.ServicioConsultaGrupos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServicioLogin</servlet-name>
         <url-pattern>/ServicioLogin</url-pattern>
@@ -31,6 +43,18 @@
     <servlet-mapping>
         <servlet-name>ServicioCambiarClave</servlet-name>
         <url-pattern>/ServicioCambiarClave</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioEntrarGrupo</servlet-name>
+        <url-pattern>/ServicioEntrarGrupo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioSalirGrupo</servlet-name>
+        <url-pattern>/ServicioSalirGrupo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioConsultaGrupos</servlet-name>
+        <url-pattern>/ServicioConsultaGrupos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
