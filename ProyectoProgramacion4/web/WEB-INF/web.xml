@@ -8,6 +8,30 @@
         <servlet-name>ServicioLogout</servlet-name>
         <servlet-class>Control.ServicioLogout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServicioCrearGrupo</servlet-name>
+        <servlet-class>Control.ServicioCrearGrupo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicioCambiarClave</servlet-name>
+        <servlet-class>Control.ServicioCambiarClave</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicioEntrarGrupo</servlet-name>
+        <servlet-class>Control.ServicioEntrarGrupo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicioSalirGrupo</servlet-name>
+        <servlet-class>Control.ServicioSalirGrupo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicioConsultaGrupos</servlet-name>
+        <servlet-class>Control.ServicioConsultaGrupos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicioMostarEstudiantes</servlet-name>
+        <servlet-class>Control.ServicioMostarEstudiantes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServicioLogin</servlet-name>
         <url-pattern>/ServicioLogin</url-pattern>
@@ -15,6 +39,30 @@
     <servlet-mapping>
         <servlet-name>ServicioLogout</servlet-name>
         <url-pattern>/ServicioLogout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioCrearGrupo</servlet-name>
+        <url-pattern>/ServicioCrearGrupo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioCambiarClave</servlet-name>
+        <url-pattern>/ServicioCambiarClave</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioMostarEstudiantes</servlet-name>
+        <url-pattern>/ServicioMostarEstudiantes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioEntrarGrupo</servlet-name>
+        <url-pattern>/ServicioEntrarGrupo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioSalirGrupo</servlet-name>
+        <url-pattern>/ServicioSalirGrupo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicioConsultaGrupos</servlet-name>
+        <url-pattern>/ServicioConsultaGrupos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

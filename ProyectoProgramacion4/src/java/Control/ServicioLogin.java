@@ -7,6 +7,9 @@ package Control;
 
 import Modelo.GestorEstudiantes;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +23,7 @@ import javax.servlet.http.HttpSession;
 public class ServicioLogin extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("cache-control", "no-cache, no-store, must-revalidate");
       
@@ -31,7 +34,7 @@ public class ServicioLogin extends HttpServlet {
         if (usuario != null && password != null) {
             try {
                 usuarioValido = GestorEstudiantes.obtenerInstancia().verificarUsuario(usuario, password);
-                //e = GestorEstudiantes.obtenerInstancia().obtenerEstudiante(usuario);
+                GestorEstudiantes.obtenerInstancia().cambiarEstadoActividad(usuario);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -41,6 +44,7 @@ public class ServicioLogin extends HttpServlet {
             HttpSession sesion = request.getSession(true);
             sesion.setAttribute("usuario", usuario);
             sesion.setMaxInactiveInterval(60 * 3);
+            System.out.println("Login exitoso");
             response.sendRedirect("principalEstudiante.jsp");
         } else {
             response.sendRedirect("errorLogin.jsp?error=2");
@@ -71,7 +75,11 @@ public class ServicioLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicioLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

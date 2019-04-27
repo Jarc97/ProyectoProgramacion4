@@ -5,6 +5,7 @@
  */
 package Control;
 
+import Modelo.GestorEstudiantes;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,22 +18,45 @@ import javax.servlet.http.HttpSession;
  *
  * @author Feli
  */
-public class ServicioLogout extends HttpServlet {
+public class ServicioCambiarClave extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        //para el cache
-        response.setHeader("cache-control", "no-cache, no-store, must-revalidate");
-
-        HttpSession sesion = request.getSession(true);
-        sesion.removeAttribute("usuario");
-        sesion.invalidate();
-        System.out.println("Sesion invalidada con exito");
-        response.sendRedirect("login.jsp");
-       
+        String clave = request.getParameter("passwordActual");
+        System.out.println("La clave es: "+clave);
+        try (PrintWriter out = response.getWriter()){            
+            HttpSession sesion = request.getSession(true);
+            Object usu = sesion.getAttribute("usuario");
+            String id_usuario = usu.toString();
+            
+            
+            response.setContentType("application/json");
+            String claveNueva1 = request.getParameter("passwordNew1");  
+            String claveNueva2 = request.getParameter("passwordNew2");
+            
+            GestorEstudiantes ge = GestorEstudiantes.obtenerInstancia();
+            if (claveNueva1.equals(claveNueva2)) {
+                ge.cambiarClave(id_usuario, claveNueva1); 
+                System.out.println("Clave cambiada correctamente");
+            }
+            else
+                System.out.println("Las entradas no coinciden");
+            response.sendRedirect("principalEstudiante.jsp");     
+        } catch (Exception e) {
+            
+        }
     }
-    /**
+
+ /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
