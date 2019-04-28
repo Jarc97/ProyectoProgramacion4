@@ -213,7 +213,7 @@ public class GestorEstudiantes implements Serializable {
 
             ListIterator<Estudiante> r = registros.listIterator();
             strb.append("<table class=\"totalEstudiantes\">\n");
-            strb.append("\t<tr>\n");
+            strb.append("\t<tr class='tableHeader1'>\n");
             strb.append("<th>Id</th>");
             strb.append("<th>Nrc</th>");
             strb.append("<th>Nombre</th>");
@@ -262,8 +262,8 @@ public class GestorEstudiantes implements Serializable {
             StringBuilder strb = new StringBuilder();
 
             ListIterator<Estudiante> r = registros.listIterator();
-            strb.append("<table class=\"totalEstudiantes\">\n");
-            strb.append("\t<tr>\n");
+            strb.append("<table class='table' style='width:100%'>\n");
+            strb.append("\t<tr class='tableHeader1'>\n");
             strb.append("<th>Id</th>");
             strb.append("<th>Nrc</th>");
             strb.append("<th>Nombre</th>");

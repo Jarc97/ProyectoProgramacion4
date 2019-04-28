@@ -17,9 +17,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="refresh" content="5;login.jsp">        
         <meta name = "viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="css/default.css" rel="stylesheet" type="text/css"/>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link href="css/errorLogin.css" rel="stylesheet" type="text/css"/>
         <% response.setHeader("cache-control", "no-cache, no-store, must-revalidate"); %>
     </head>
     <body>
@@ -38,7 +36,7 @@
                     <span style="color:red">
                         <%
                             int codError = 0;
-                            String mensaje = "(Por favor, inicie sesión o espere a la redireccion)";
+                            String mensaje = "(Por favor, espere a la redireccion)";
                             try {
                                 codError = Integer.parseInt(request.getParameter("error"));
                             } catch (Exception e) {
@@ -54,16 +52,11 @@
                                     mensaje = "Los datos no coinciden.";
                                     break;
                                 default:
-                                            ;
+                                    break;
                             }
                             out.println(mensaje);
                         %>
                     </span>
-                </p>
-                <p>
-                <form action="login.jsp" method ="GET">
-                    <button type="submit"><strong>Iniciar sesión</strong></button>
-                </form>
                 </p>
             </div>           
         </div>

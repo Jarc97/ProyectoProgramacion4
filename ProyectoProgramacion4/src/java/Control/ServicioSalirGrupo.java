@@ -43,7 +43,7 @@ public class ServicioSalirGrupo extends HttpServlet {
             String idGrupo = request.getParameter("id_grupo");
             
             GestorGrupos gg = GestorGrupos.obtenerInstancia();
-            gg.eliminarEstudianteEnGrupo(idEstudiante);
+            gg.eliminarEstudianteEnGrupo(idEstudiante, idGrupo);
             gg.verificarActividadDeGrupo(idGrupo);
             // response.sendRedirect("formacionGrupo.jsp");
             

@@ -1,18 +1,20 @@
 <%-- 
-    Document   : cambioClave
-    Created on : 19/04/2019, 06:04:26 PM
-    Author     : Feli
---%>
-
+// cambioClave.jsp  
+// 
+// EIF209 - Programación 4 – Proyecto #1
+// Abril 2019 
+// 
+// Autores: 
+//  - 402360123 Luis Felipe Soto Cruz
+//  - 116760031 Julio Rodriguez Chavarria
+// 
+// --%> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Validar Contraseña</title> 
-
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="css/default.css" rel="stylesheet" type="text/css"/>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link href="css/cambioClave.css" rel="stylesheet" type="text/css"/>
         <% response.setHeader("cache-control", "no-cache, no-store, must-revalidate"); %>
         <script src="scripts/script.js" type="text/javascript"></script>
     </head>
@@ -57,7 +59,6 @@
                     </form>
                 </div>
             </div>
-
             <jsp:directive.include file="footer.jsp" />
     </body>
 </html>

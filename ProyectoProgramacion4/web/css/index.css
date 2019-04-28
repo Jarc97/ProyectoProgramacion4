@@ -1,0 +1,38 @@
+/*
+// index.css 
+// 
+// EIF209 - Programación 4 – Proyecto #1
+// Abril 2019 
+// 
+// Autores: 
+//  - 402360123 Luis Felipe Soto Cruz
+//  - 116760031 Julio Rodriguez Chavarria
+// 
+*/
+body{
+    font-family: sans-serif;
+    font-size: 20px;
+    margin-left: 0px;
+}
+#wrapper{
+    margin-left: 5%;  
+    margin-top: 8%
+}
+
+#wrapperLogin{
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 120px;
+}
+#wrapper .inicio{
+    margin-top: 20px;
+} 
+
+#formTitulo, #formSubmit {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

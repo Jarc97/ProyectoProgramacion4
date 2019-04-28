@@ -1,0 +1,38 @@
+/*
+ header.css 
+ 
+ EIF209 - Programación 4 – Proyecto #1
+ Abril 2019 
+ 
+ Autores: 
+  - 402360123 Luis Felipe Soto Cruz
+  - 116760031 Julio Rodriguez Chavarria
+*/
+
+
+.headerNavbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0; 
+  width: 100%;
+  overflow: hidden;
+  background-color: #333333;
+}
+
+.headerNavbar li {
+  float: left;
+}
+
+.headerNavbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.headerNavbar li a.nav-link:hover {
+    background-color: #666666;
+}

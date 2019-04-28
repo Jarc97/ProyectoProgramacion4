@@ -21,10 +21,8 @@
         <title>Estudiantes Registrados</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">        
         <meta name = "viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="css/default.css" rel="stylesheet" type="text/css"/>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <% response.setHeader("cache-control", "no-cache, no-store, must-revalidate");%>
+        <link href="css/mostarUsuarios.css" rel="stylesheet" type="text/css"/>
+<% response.setHeader("cache-control", "no-cache, no-store, must-revalidate");%>
         <script src="scripts/script.js" type="text/javascript"></script> 
         <script src="scripts/mostrarUsuarios.js" type="text/javascript"></script>
         <script type="text/javascript">
@@ -54,20 +52,21 @@
         <jsp:setProperty name = "sessionEst" property="id" value= "<%=id%>" />
         <h6>Id de la sesion actual mediante bean: <jsp:getProperty name="sessionEst" property="id"/></h6>       
         <div id = "wrapperMostrar">
-
-            <div id = "contents">
-                <h2>Seccion de Usuarios</h2>
-                <h6>
+            <div>
+                <h1 class="infoPag">
+                    Seccion de Usuarios
+                </h1>
+                <h4 id="contents">
                     En esta seccion, usted podra ver todos los estudiantes activos y todos los registros en la base de datos mediante un criterio de busqueda. 
-                </h6>
+                </h4>
             </div>
             <h4>Listado de estudiantes activos</h4>
-            <div id="contenido">
+            <div class="contenido">
                 <%= ge.obtenerEstudiantesActivos()%>
             </div>
             <h4>Listado de estudiantes por criterio de busqueda ${opcion}</h4>
             <form name="buscarPor" action="ServicioMostarEstudiantes" method="POST">
-                <h5>
+                <h5 class="formFiltrar">
                     Mostrar por...
                     <select name="selFil" onchange="seleccionarOpcion()">
                         <option value="por Defecto" selected="selected">Elija una opcion</option>
@@ -77,11 +76,10 @@
                         <option value="por Apellidos y Nombre">Apellidos y nombre</option>
                         <option value="por Ultimo Acceso">Ultimo Acceso</option>
                     </select>
-                    <input type="submit" value="Filtar"/>
+                    <input id="formSubmit" type="submit" value="Filtar"/>
                 </h5>
-
             </form>
-            <div id="usuariosTotales"> 
+            <div class="usuariosTotales"> 
                 ${listaE}
             </div>
         </div>            

@@ -1,0 +1,21 @@
+/*
+ footer.jsp  
+ 
+ EIF209 - Programación 4 – Proyecto #1
+ Abril 2019 
+ 
+ Autores: 
+  - 402360123 Luis Felipe Soto Cruz
+  - 116760031 Julio Rodriguez Chavarria
+*/
+
+.footer {    
+text-align: center;    
+    position:fixed;
+    background-color: #333333;
+    color: white;
+    clear:both;
+    width: 100%;
+    height:auto;
+    bottom: 0;
+}

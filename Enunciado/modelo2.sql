@@ -3,7 +3,7 @@ DROP SCHEMA IF EXISTS `eif209_1901_p01` ;
 CREATE SCHEMA IF NOT EXISTS `eif209_1901_p01`
 	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci ;
 USE `eif209_1901_p01` ;
-
+SET GLOBAL time_zone = '-6:00';
 -- DROP TABLE IF EXISTS `eif209_1901_p01`.`grupo` ;
 CREATE TABLE IF NOT EXISTS `eif209_1901_p01`.`grupo` (
   `id` INT(6) NOT NULL auto_increment,
